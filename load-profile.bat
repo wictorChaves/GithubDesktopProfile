@@ -1,5 +1,6 @@
 @echo off
 setlocal ENABLEDELAYEDEXPANSION
+set "breakline=type nul | more /e /p"
 
 rem CONFIGS
 set dirProfiles="%~dp0\Profiles\"
@@ -7,12 +8,19 @@ set githubExec="%homepath%\AppData\Local\GitHubDesktop\GitHubDesktop.exe"
 
 cd %dirProfiles%
 
-echo Qual profile voce deseja carregar?
+%breakline%
+echo     ---------------------------------------------
+echo         Qual profile voce deseja carregar?
+echo     ---------------------------------------------
+%breakline%
+
 set /a c=0
-for /r %%i in (*) do (
+for /r %%i in (*.zip) do (
 	set /a c=c+1
-	echo !c! - %%i
+	echo     !c! - %%i
 )
+
+%breakline%
 set /p ProfileLoadNumber=Numero da opcao: 
 
 set /a folder=0
