@@ -1,9 +1,8 @@
 @echo off
-set "breakline=type nul | more /e /p"
-
-rem CONFIGS
-set dirProfiles="%~dp0\Profiles\"
-set githubExec="%homepath%\AppData\Local\GitHubDesktop\GitHubDesktop.exe"
+setlocal ENABLEDELAYEDEXPANSION
+cd %~dp0
+call lib.cmd
+call configs.cmd
 
 %breakline%
 set /p ProfileName=Entre com o nome do profile: 
@@ -13,4 +12,6 @@ cd %AppData%
 "c:\Program Files\7-Zip\7z.exe" a -mx %ProfileName%.zip "GitHub Desktop"
 move %ProfileName%.zip %dirProfiles%
 start "" %githubExec%
+
+%msg% "Profile Criado!"
 pause

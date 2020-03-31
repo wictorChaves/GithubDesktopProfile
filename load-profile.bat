@@ -1,19 +1,12 @@
 @echo off
 setlocal ENABLEDELAYEDEXPANSION
-set "breakline=type nul | more /e /p"
+cd %~dp0
+call lib.cmd
+call configs.cmd
 
-rem CONFIGS
-set dirProfiles="%~dp0\Profiles\"
-set githubExec="%homepath%\AppData\Local\GitHubDesktop\GitHubDesktop.exe"
+%msg% "Qual profile voce deseja carregar?"
 
 cd %dirProfiles%
-
-%breakline%
-echo     ---------------------------------------------
-echo         Qual profile voce deseja carregar?
-echo     ---------------------------------------------
-%breakline%
-
 set /a c=0
 for /r %%i in (*.zip) do (
 	set /a c=c+1
@@ -25,7 +18,7 @@ set /p ProfileLoadNumber=Numero da opcao:
 
 set /a folder=0
 set /a c=0
-for /r %%i in (*) do (
+for /r %%i in (*.zip) do (
 	set /a c=c+1
 	IF %ProfileLoadNumber%==!c! (
 		set "folder=%%i"
@@ -35,7 +28,7 @@ for /r %%i in (*) do (
 cd %AppData%
 rmdir "GitHub Desktop" /s /q
 echo Pasta atual excluida
-TIMEOUT 2
+TIMEOUT 3
 %githubExec%
 echo Criando nova pasta com as novas permissoes
 TIMEOUT 2
@@ -44,6 +37,8 @@ taskkill /f -im GitHubDesktop.exe
 TIMEOUT 2
 
 "c:\Program Files\7-Zip\7z.exe" -aoa x %folder% -o%AppData%
-echo Profile restaurado!
+
 start "" %githubExec%
+
+%msg% "Profile restaurado!"
 pause
