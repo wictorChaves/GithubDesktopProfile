@@ -13,5 +13,5 @@ cd %AppData%
 move %ProfileName%.zip %dirProfiles%
 start "" %githubExec%
 
-%msg% "Profile Criado!"
-pause
+cd %~dp0
+call SystemTrayNotification.bat  -tooltip info -time 3000 -title "Profile Github Desktop" -text "Profile Criado!" -icon Information

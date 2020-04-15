@@ -40,5 +40,5 @@ TIMEOUT 2
 
 start "" %githubExec%
 
-%msg% "Profile restaurado!"
-pause
+cd %~dp0
+call SystemTrayNotification.bat  -tooltip info -time 3000 -title "Profile Github Desktop" -text "Profile restaurado!" -icon Information
