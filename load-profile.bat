@@ -6,9 +6,9 @@ call configs.cmd
 
 %msg% "Qual profile voce deseja carregar?"
 
-cd %dirProfiles%
+cd "%dirProfiles%"
 set /a c=0
-for /r %%i in (*.zip) do (
+for /d %%i in (*) do (
 	set /a c=c+1
 	echo     !c! - %%i
 )
@@ -18,27 +18,25 @@ set /p ProfileLoadNumber=Numero da opcao:
 
 set /a folder=0
 set /a c=0
-for /r %%i in (*.zip) do (
+for /d %%i in (*) do (
 	set /a c=c+1
 	IF %ProfileLoadNumber%==!c! (
 		set "folder=%%i"
 	)
 )
+TIMEOUT 1
 
-cd %AppData%
-rmdir "GitHub Desktop" /s /q
-echo Pasta atual excluida
-TIMEOUT 3
-%githubExec%
-echo Criando nova pasta com as novas permissoes
-TIMEOUT 2
 echo Finalizando GitHubDesktop.exe
 taskkill /f -im GitHubDesktop.exe
 TIMEOUT 2
 
-"c:\Program Files\7-Zip\7z.exe" -aoa x %folder% -o%AppData%
+echo Finalizando GitHubDesktop.exe
+taskkill /f -im GitHubDesktop.exe
+TIMEOUT 2
 
-start "" %githubExec%
+cd %AppData%
+copy "%dirProfiles%\%folder%\000003.log" "GitHub Desktop\IndexedDB\file__0.indexeddb.leveldb\000003.log" /y
 
 cd %~dp0
 call SystemTrayNotification.bat  -tooltip info -time 3000 -title "Profile Github Desktop" -text "Profile restaurado!" -icon Information
+%githubExec%
