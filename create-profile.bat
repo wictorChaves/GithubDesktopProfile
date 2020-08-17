@@ -4,7 +4,7 @@ cd %~dp0
 call lib.cmd
 call configs.cmd
 
-echo Perfies existentes:
+%msg% "Perfies existentes"
 cd "%dirProfiles%"
 set /a c=0
 for /d %%i in (*) do (
